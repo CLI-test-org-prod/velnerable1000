@@ -16,6 +16,7 @@ count_medium = 0
 
 
 
+
 for i in range(len(test_txt['results'])):
     if (test_txt['results'][i]['found_by']) == [73]:
 
