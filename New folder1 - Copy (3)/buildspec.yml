@@ -1,0 +1,41 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+        docker: 18     
+    commands: 
+      #- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+      # - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - pip install detect-secrets
+      - which detect-secrets
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+      - detect-secrets  scan > gitsecret_report.json
+      - cat gitsecret_report.json
+      - chmod 777 pushtodefectdojo.sh
+      - ./pushtodefectdojo.sh
+     
+      - pwd
+      - ls -lrth
+      
+      #- echo Setting up docker
+      #- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      #- timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - chmod 777 owasp-dependency-check.sh
+      - ./owasp-dependency-check.sh
+      #- ls -lrth /odc-reports
+      - cat dependency-check-report.xml
+      - ls -lrth
+      
+      
+      
+
+  build:
+    commands:
+      - echo Build started on `date`
+     
+  post_build:
+    commands:
+      - echo Build completed on `date`
