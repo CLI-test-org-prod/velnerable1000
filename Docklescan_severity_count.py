@@ -14,10 +14,6 @@ count_low = 0
 count_medium = 0
 
 
-
-
-
-
 for i in range(len(test_txt['results'])):
     if (test_txt['results'][i]['found_by']) == [73]:
 
@@ -42,7 +38,6 @@ print('Medium Count is: ', count_medium)
 print('Low Count is: ', count_low)
 
 if count_high > 2:
-    
     print("more than 2  high severity found so terminated pipeline")
     #exit(1)
 elif count_medium > 1:
